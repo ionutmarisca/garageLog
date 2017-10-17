@@ -1,4 +1,5 @@
 # garageLog
+### Marisca Mihai Ionut - mmie1942@scs.ubbcluj.ro
 Mobile application to manage miscellaneous details about your cars
 
 ## What is garageLog?
@@ -10,7 +11,7 @@ Mobile application to manage miscellaneous details about your cars
 Using the provided data, **garageLog** will show you statistics about all the cars in your garage, so you'll get a proper overview of the costs.
 
 * Add, remove and delete cars
-* Update mileage, service entries and information about fuel
+* Update mileage, service entries and information about fuel consumption
 * Share details about a given car or service entry
-* See statistics about the cost for a given period of time
+* See statistics regarding the cost for a given period of time
 * Get notifications when a car should enter the service
