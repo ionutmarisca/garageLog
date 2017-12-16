@@ -123,7 +123,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.O
 
     @Override
     public void onItemLongClick(final int id) {
-        Toast.makeText(getApplicationContext(), "Long click registered", Toast.LENGTH_SHORT).show();
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
