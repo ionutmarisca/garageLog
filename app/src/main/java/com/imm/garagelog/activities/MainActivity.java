@@ -22,6 +22,7 @@ import com.imm.garagelog.R;
 import com.imm.garagelog.adapters.RecyclerAdapter;
 import com.imm.garagelog.domain.Car;
 import com.imm.garagelog.repository.Repository;
+import com.imm.garagelog.utils.Database;
 
 public class MainActivity extends AppCompatActivity implements RecyclerAdapter.OnItemClickListener, RecyclerAdapter.OnItemLongClickListener {
     public static Repository repository;
@@ -40,8 +41,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.O
         final Button sendButton = (Button) findViewById(R.id.sendButton);
         final Button signOutButton = (Button) findViewById(R.id.signOutButton);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        FirebaseDatabase database = Database.getDatabase();
         myRef = database.getReference(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         repository = new Repository();
@@ -50,7 +50,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.O
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                repository.setCarList(dataSnapshot.getValue(Repository.class).getCarList());
+                if(dataSnapshot.getValue(Repository.class) != null)
+                    repository.setCarList(dataSnapshot.getValue(Repository.class).getCarList());
                 myRecyclerAdapter.notifyDataSetChanged();
             }
 
@@ -106,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.O
                 FirebaseAuth.getInstance().signOut();
                 if (FirebaseAuth.getInstance().getCurrentUser() == null) {
                     Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
                 }
             }
