@@ -10,32 +10,28 @@
         android:id="@+id/brandName"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:hint="Brand name"/>
+        android:hint="Brand name" />
 
     <EditText
         android:id="@+id/modelName"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@+id/brandName"
-        android:hint="Model name"/>
+        android:hint="Model name" />
+
+    <EditText
+        android:id="@+id/brandLogoUrl"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/modelName"
+        android:hint="Brand logo URL" />
 
     <EditText
         android:id="@+id/engineSize"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@+id/modelName"
-        android:hint="Engine size"/>
-
-    <org.eazegraph.lib.charts.BarChart
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/barStatistics"
-        android:layout_width="match_parent"
-        android:layout_height="256dp"
-        android:layout_below="@id/engineSize"
-        android:padding="10dp"
-        app:egFixedBarWidth="true"
-        app:egBarWidth="20dp"
-        app:egLegendHeight="40dp"/>
+        android:layout_below="@+id/brandLogoUrl"
+        android:hint="Engine size" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -43,10 +39,10 @@
         android:layout_alignParentBottom="true">
 
         <Button
-            android:id="@+id/saveButton"
+            android:id="@+id/addButton"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:text="Save" />
+            android:text="Add" />
 
     </RelativeLayout>
 

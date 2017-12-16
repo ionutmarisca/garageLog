@@ -18,7 +18,16 @@ public class Repository implements Serializable {
     }
 
     public void addCar(Car car) {
+        car.setId(getNextId());
         carList.add(car);
+    }
+
+    public void deleteCar(int id) {
+        carList.remove(id);
+        //Repair IDs
+        for (int i = 0; i < carList.size(); i++) {
+            carList.get(i).setId(i + 1);
+        }
     }
 
     public void updateCar(int index, Car car) {
@@ -34,5 +43,17 @@ public class Repository implements Serializable {
 
     public List<Car> getCarList() {
         return this.carList;
+    }
+
+    public void setCarList(List<Car> carList) {
+        this.carList = carList;
+    }
+
+    private int getNextId() {
+        if (carList.size() == 0) {
+            return 1;
+        } else {
+            return carList.size() + 1;
+        }
     }
 }

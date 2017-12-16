@@ -3,54 +3,54 @@
     android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
-    android:focusable="true"
-    android:background="?android:attr/selectableItemBackground">
+    android:focusable="true">
 
     <TextView
         android:id="@+id/brandName"
-        android:layout_marginTop="6dp"
-        android:paddingTop="6dp"
         android:layout_width="match_parent"
         android:layout_height="28dp"
-        android:gravity="center_vertical"
-        android:textStyle="bold"
-        android:text="Brand name"
         android:layout_alignLeft="@+id/modelName"
-        android:layout_alignStart="@+id/modelName" />
+        android:layout_alignStart="@+id/modelName"
+        android:layout_marginTop="6dp"
+        android:gravity="center_vertical"
+        android:paddingTop="6dp"
+        android:text="Brand name"
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/brandLogo"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="10dp"
-        android:layout_alignTop="@+id/brandName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="15dp" />
+        android:layout_alignTop="@+id/brandName"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="4dp" />
 
     <TextView
         android:id="@+id/modelName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:textAppearanceListItem"
-        android:gravity="center_vertical"
-        android:paddingTop="2dp"
-        android:paddingBottom="8dp"
+        android:layout_below="@+id/brandName"
         android:layout_marginLeft="90dp"
-        android:textSize="20dp"
+        android:gravity="center_vertical"
+        android:paddingBottom="8dp"
+        android:paddingTop="2dp"
         android:text="Model name"
-        android:layout_below="@+id/brandName"/>
+        android:textAppearance="?android:textAppearanceListItem"
+        android:textSize="20dp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#E0E0E0"
-        android:layout_marginTop="15dp"
+        android:layout_alignEnd="@+id/modelName"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/modelName"
-        android:layout_alignEnd="@+id/modelName" />
+        android:layout_marginTop="15dp"
+        android:background="#E0E0E0" />
 
 </RelativeLayout>

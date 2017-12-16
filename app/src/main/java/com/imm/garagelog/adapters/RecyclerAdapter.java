@@ -9,32 +9,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.imm.garagelog.R;
-import com.imm.garagelog.domain.Car;
+import com.imm.garagelog.repository.Repository;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 /**
  * Created by Ionut on 30/10/2017.
  */
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> {
-    List<Car> carList;
+    Repository repository;
     OnItemClickListener listener;
+    OnItemLongClickListener longListener;
     Context context;
 
-    public interface OnItemClickListener {
-        void onItemClick(int id);
-    }
-
-    public RecyclerAdapter(List<Car> carList, OnItemClickListener listener) {
-        this.carList = carList;
+    public RecyclerAdapter(Repository repository, OnItemClickListener listener, OnItemLongClickListener longListener) {
+        this.repository = repository;
         this.listener = listener;
+        this.longListener = longListener;
     }
 
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_layout,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_layout, parent, false);
         RecyclerViewHolder recyclerViewHolder = new RecyclerViewHolder(view);
         context = parent.getContext();
         return recyclerViewHolder;
@@ -42,17 +38,25 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
-        holder.brandName.setText(carList.get(position).getBrand());
-        holder.modelName.setText(carList.get(position).getModel());
-        Picasso.with(context).load(carList.get(position).getBrandLogoUrl()).into(holder.brandLogo);
+        holder.brandName.setText(repository.getCarList().get(position).getBrand());
+        holder.modelName.setText(repository.getCarList().get(position).getModel());
+        Picasso.with(context).load(repository.getCarList().get(position).getBrandLogoUrl()).into(holder.brandLogo);
     }
 
     @Override
     public int getItemCount() {
-        return carList.size();
+        return repository.getCarList().size();
     }
 
-    public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public interface OnItemClickListener {
+        void onItemClick(int id);
+    }
+
+    public interface OnItemLongClickListener {
+        void onItemLongClick(final int id);
+    }
+
+    public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView brandName;
         TextView modelName;
         ImageView brandLogo;
@@ -60,14 +64,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         public RecyclerViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            brandName = (TextView)itemView.findViewById(R.id.brandName);
-            modelName = (TextView)itemView.findViewById(R.id.modelName);
-            brandLogo = (ImageView)itemView.findViewById(R.id.brandLogo);
+            itemView.setOnLongClickListener(this);
+            brandName = (TextView) itemView.findViewById(R.id.brandName);
+            modelName = (TextView) itemView.findViewById(R.id.modelName);
+            brandLogo = (ImageView) itemView.findViewById(R.id.brandLogo);
         }
 
         @Override
         public void onClick(View v) {
             listener.onItemClick(getAdapterPosition());
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            longListener.onItemLongClick(getAdapterPosition());
+            return true;
         }
     }
 }
