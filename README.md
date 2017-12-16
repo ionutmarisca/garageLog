@@ -18,7 +18,8 @@ Using the provided data, **garageLog** will show you statistics about all the ca
 
 ## Firebase integration
 **garageLog** is now integrated with **Firebase**. The **Sign Up** functionality, however, is not implemented yet.
+
 For testing purposes, please use the following credentials:
 
-Email: test@garagelog.com
-Password: testaccount
+* Email: test@garagelog.com
+* Password: testaccount
