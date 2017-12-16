@@ -14,20 +14,41 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_above="@+id/bottomTools"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Add new car" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomTools"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/carId"
-            android:layout_width="300dp"
+            android:layout_width="200dp"
             android:layout_height="match_parent"
-            android:hint="ID of the Car..."/>
+            android:hint="ID of the Car..." />
 
         <Button
             android:id="@+id/sendButton"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:text="Send" />
+
+        <Button
+            android:id="@+id/signOutButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="SEnd"/>
+            android:text="Sign out" />
 
     </LinearLayout>
 
