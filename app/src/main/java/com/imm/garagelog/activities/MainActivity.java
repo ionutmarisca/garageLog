@@ -1,5 +1,6 @@
 package com.imm.garagelog.activities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import com.imm.garagelog.utils.Database;
 
 public class MainActivity extends AppCompatActivity implements RecyclerAdapter.OnItemClickListener, RecyclerAdapter.OnItemLongClickListener {
     public static Repository repository;
+    public static Context context;
     RecyclerView myRecyclerView;
     RecyclerView.Adapter myRecyclerAdapter;
     DatabaseReference myRef;
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.O
         FirebaseDatabase database = Database.getDatabase();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final String email = user.getEmail();
+        context = getApplicationContext();
         myRef = database.getReference(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         repository = new Repository();
@@ -159,5 +162,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.O
                 myRef.setValue(repository);
             }
         }
+    }
+
+    public static void showRepositoryUpdated() {
+        Toast.makeText(context, "Repository updated!", Toast.LENGTH_SHORT).show();
     }
 }
