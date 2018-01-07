@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.O
         final Button signOutButton = (Button) findViewById(R.id.signOutButton);
 
         FirebaseDatabase database = Database.getDatabase();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final String email = user.getEmail();
         myRef = database.getReference(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         repository = new Repository();
@@ -72,8 +76,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.O
         addCar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, AddActivity.class);
-                startActivityForResult(i, 1);
+                if(email == null && repository.getCarList().size() > 0) {
+                    Toast.makeText(getApplicationContext(), "As a guest user, you can only have one car added.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent i = new Intent(MainActivity.this, AddActivity.class);
+                    startActivityForResult(i, 1);
+                }
             }
         });
 
