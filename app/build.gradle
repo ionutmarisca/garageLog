@@ -32,8 +32,10 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:10.0.1'
     compile 'com.github.blackfizz:eazegraph:1.2.5l@aar'
     compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.google.firebase:firebase-messaging:10.0.1'
     testCompile 'junit:junit:4.12'
 }
+
 
 
 

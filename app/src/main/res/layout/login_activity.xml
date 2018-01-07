@@ -26,4 +26,10 @@
         android:layout_height="wrap_content"
         android:text="Sign In" />
 
+    <Button
+        android:id="@+id/guestButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Guest LOGIN" />
+
 </LinearLayout>

@@ -34,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText emailAddress = (EditText) findViewById(R.id.emailInput);
         final EditText password = (EditText) findViewById(R.id.passwordInput);
         final Button signInButton = (Button) findViewById(R.id.signInButton);
+        final Button guestButton = (Button) findViewById(R.id.guestButton);
 
         mAuth = FirebaseAuth.getInstance();
         //Handle user already logged in
@@ -58,6 +59,13 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(LoginActivity.this, "Email and password fields cannot be empty", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        guestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signInGuest();
             }
         });
     }
@@ -89,6 +97,23 @@ public class LoginActivity extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    public void signInGuest() {
+        mAuth.signInAnonymously()
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInAnonymously:success");
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInAnonymously:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Guest authentication failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
