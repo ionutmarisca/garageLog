@@ -77,6 +77,16 @@ public class Repository extends Observer implements Serializable {
         }
     }
 
+    public int getAverageEngineSize() {
+        int s = 0, d = 0;
+        for(Car car : carList) {
+            s = s + car.getEngineSize();
+            d++;
+        }
+        Double average = ((double) s) / d;
+        return average.intValue();
+    }
+
     @Override
     public void update() {
         MainActivity.showRepositoryUpdated();
