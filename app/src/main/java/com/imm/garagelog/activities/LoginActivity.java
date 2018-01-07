@@ -34,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText emailAddress = (EditText) findViewById(R.id.emailInput);
         final EditText password = (EditText) findViewById(R.id.passwordInput);
         final Button signInButton = (Button) findViewById(R.id.signInButton);
+        final Button signUpButton = (Button) findViewById(R.id.registerButton);
         final Button guestButton = (Button) findViewById(R.id.guestButton);
 
         mAuth = FirebaseAuth.getInstance();
@@ -59,6 +60,14 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(LoginActivity.this, "Email and password fields cannot be empty", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(i);
             }
         });
 
