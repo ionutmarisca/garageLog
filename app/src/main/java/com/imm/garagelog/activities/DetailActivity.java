@@ -66,7 +66,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public void initializeStatistics(BarChart chart, int engineSize) {
         chart.addBar(new BarModel("Your Car", engineSize, 0xFF123456));
-        chart.addBar(new BarModel("Overall Cars", 1650, 0xFF343456));
+        chart.addBar(new BarModel("Overall Cars", MainActivity.repository.getAverageEngineSize(), 0xFF343456));
 
         chart.startAnimation();
     }

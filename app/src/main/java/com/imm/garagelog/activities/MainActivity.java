@@ -1,21 +1,23 @@
 package com.imm.garagelog.activities;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,6 +37,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.O
     DatabaseReference myRef;
     RecyclerView.LayoutManager myRecyclerManager;
 
+    public static void showRepositoryUpdated() {
+        Toast.makeText(context, "Repository updated!", Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +50,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.O
         final Button addCar = (Button) findViewById(R.id.addButton);
         final Button sendButton = (Button) findViewById(R.id.sendButton);
         final Button signOutButton = (Button) findViewById(R.id.signOutButton);
+        final Button getNotification = (Button) findViewById(R.id.getNotification);
+        final NumberPicker numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
+        numberPicker.setMinValue(1);
+        numberPicker.setMaxValue(100);
 
         FirebaseDatabase database = Database.getDatabase();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -57,8 +67,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.O
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue(Repository.class) != null)
+                if (dataSnapshot.getValue(Repository.class) != null) {
                     repository.setCarList(dataSnapshot.getValue(Repository.class).getCarList());
+                }
                 myRecyclerAdapter.notifyDataSetChanged();
             }
 
@@ -79,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.O
         addCar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(email == null && repository.getCarList().size() > 0) {
+                if (email == null && repository.getCarList().size() > 0) {
                     Toast.makeText(getApplicationContext(), "As a guest user, you can only have one car added.", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent i = new Intent(MainActivity.this, AddActivity.class);
@@ -123,6 +134,20 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.O
                 }
             }
         });
+
+        getNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendNotification(v);
+            }
+        });
+
+        numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                inputField.setText(Integer.toString(newVal));
+            }
+        });
     }
 
     @Override
@@ -164,7 +189,29 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.O
         }
     }
 
-    public static void showRepositoryUpdated() {
-        Toast.makeText(context, "Repository updated!", Toast.LENGTH_SHORT).show();
+    public void sendNotification(View view) {
+
+        //Get an instance of NotificationManager//
+
+        NotificationCompat.Builder mBuilder =
+                (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                        .setSmallIcon(android.R.drawable.sym_def_app_icon)
+                        .setContentTitle("garageLog")
+                        .setContentText("This is a sample notification!");
+
+
+        // Gets an instance of the NotificationManager service//
+
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // When you issue multiple notifications about the same type of event,
+        // it’s best practice for your app to try to update an existing notification
+        // with this new information, rather than immediately creating a new notification.
+        // If you want to update this notification at a later date, you need to assign it an ID.
+        // You can then use this ID whenever you issue a subsequent notification.
+        // If the previous notification is still visible, the system will update this existing notification,
+        // rather than create a new one. In this example, the notification’s ID is 001//
+
+        mNotificationManager.notify(001, mBuilder.build());
     }
 }
